@@ -1,5 +1,5 @@
-📊 Data Transformer — Advanced SQL Analytics System
-🎯 Project Overview
+#📊 Data Transformer — Advanced SQL Analytics System
+#🎯 Project Overview
 Data Transformer is a comprehensive SQL project designed to demonstrate advanced database management, analytical querying, and data manipulation skills.
 
 This project simulates a Corporate Data Analysis System with three core functional areas:
