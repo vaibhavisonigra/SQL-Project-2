@@ -1,252 +1,121 @@
-# SQL-Project-2
-# DATA TRANSFORM SQL
+📊 Data Transformer — Advanced SQL Analytics System
+🎯 Project Overview
+Data Transformer is a comprehensive SQL project designed to demonstrate advanced database management, analytical querying, and data manipulation skills.
 
-### Corporate Data Analysis System \| MySQL · phpMyAdmin
+This project simulates a Corporate Data Analysis System with three core functional areas:
 
-> **Project README & Submission Guide**\
-> A practical SQL project focused on customer insights, order analysis,
-> employee performance, joins, subqueries, date functions, string
-> functions, window functions, and conditional logic.
+👤 Customer Information Management
 
-------------------------------------------------------------------------
+🛒 Sales Transaction Processing
 
-## 01 · Project Overview
+💼 Employee Performance Data
 
-**Data Transform SQL** simulates a small corporate data environment. It
-brings together customer, order, and employee records so that business
-questions can be answered using SQL.
+🗄️ Database Schema & Sample Data
+1️⃣ Customers Table
+Stores core customer demographics and registration metadata.
 
-### Project goals
+Field	Type	Description
+CustomerID	Primary Key	Unique identifier for each customer
+FirstName	Varchar	Customer's first name
+LastName	Varchar	Customer's last name
+Email	Varchar	Unique customer email address
+RegistrationDate	Date	Date when the account was created
+📄 Sample Data:
+CustomerID	FirstName	LastName	Email	RegistrationDate
+1	John	Doe	john.doe@email.com	2022-03-15
+2	Jane	Smith	jane.smith@email.com	2021-11-02
+2️⃣ Orders Table
+Tracks customer transactional history and purchasing volume.
 
--   Connect related records using different types of `JOIN`.
--   Analyze order values and employee salaries using subqueries and
-    aggregate functions.
--   Transform dates and text into useful reporting formats.
--   Apply window functions to calculate running totals and rankings.
--   Classify orders and salaries using conditional logic.
+Field	Type	Description
+OrderID	Primary Key	Unique identifier for each order
+CustomerID	Foreign Key	References Customers(CustomerID)
+OrderDate	Date	Date when order was placed
+TotalAmount	Decimal	Total order value
+📄 Sample Data:
+OrderID	CustomerID	OrderDate	TotalAmount
+101	1	2023-07-01	$150.50
+102	2	2023-07-03	$200.75
+3️⃣ Employees Table
+Contains organizational data, compensation details, and hiring timelines.
 
-## 02 · Database Design
+Field	Type	Description
+EmployeeID	Primary Key	Unique identifier for each employee
+FirstName	Varchar	Employee's first name
+LastName	Varchar	Employee's last name
+Department	Varchar	Assigned department
+HireDate	Date	Date of employment start
+Salary	Decimal	Annual compensation amount
+📄 Sample Data:
+EmployeeID	FirstName	LastName	Department	HireDate	Salary
+1	Mark	Johnson	Sales	2020-01-15	$50,000.00
+2	Susan	Lee	HR	2021-03-20	$55,000.00
+⚡ SQL Analytical Tasks & Implementation
+The project covers a wide range of advanced SQL techniques across 17 specialized queries:
 
-Create a database named `corporate_analysis_db` (or use the database
-name specified by your instructor).
+🔗 Joins & Set Operations
+INNER JOIN: Retrieve matching records between orders and customers.
 
-### Tables and fields
+LEFT JOIN: Fetch all customers including those without order history.
 
-  -----------------------------------------------------------------------
-  Table                   Fields                  Purpose
-  ----------------------- ----------------------- -----------------------
-  `customers`             `CustomerID` (PK),      Stores customer profile
-                          `FirstName`,            information
-                          `LastName`, `Email`,    
-                          `RegistrationDate`      
+RIGHT JOIN: Fetch all orders and associated customer details.
 
-  `orders`                `OrderID` (PK),         Stores customer
-                          `CustomerID` (FK),      purchases
-                          `OrderDate`,            
-                          `TotalAmount`           
+FULL OUTER JOIN: Combine all records from both customers and orders tables.
 
-  `employees`             `EmployeeID` (PK),      Stores employee and
-                          `FirstName`,            salary information
-                          `LastName`,             
-                          `Department`,           
-                          `HireDate`, `Salary`    
-  -----------------------------------------------------------------------
+🔍 Subqueries & Aggregations
+Identify customers who placed orders higher than the overall average order amount.
 
-**Relationship:** `orders.CustomerID` refers to `customers.CustomerID`.
-One customer may have multiple orders. Employees are analyzed
-independently unless the project is extended.
+Filter employees earning above the department/overall average salary.
 
-### Sample records from the project brief
+📅 Date & Time Manipulations
+Extract Year and Month components from OrderDate.
 
-**Customers**
+Calculate age/tenure using Date Differences (OrderDate vs Current Date).
 
-    CustomerID FirstName   LastName   Email                  RegistrationDate
-  ------------ ----------- ---------- ---------------------- ------------------
-             1 John        Doe        john.doe@email.com     2022-03-15
-             2 Jane        Smith      jane.smith@email.com   2021-11-02
+Reformat dates into human-readable strings (e.g., DD-MMM-YYYY).
 
-**Orders**
+🔤 String Transformation Functions
+CONCAT(): Merge FirstName and LastName into full names.
 
-    OrderID   CustomerID OrderDate      TotalAmount
-  --------- ------------ ------------ -------------
-        101            1 2023-07-01          150.50
-        102            2 2023-07-03          200.75
+REPLACE(): Substitute character strings (e.g., replacing "John" with "Jonathan").
 
-**Employees**
+UPPER() / LOWER(): Standardize text case sensitivity across datasets.
 
-    EmployeeID FirstName   LastName   Department   HireDate         Salary
-  ------------ ----------- ---------- ------------ ------------ ----------
-             1 Mark        Johnson    Sales        2020-01-15     50000.00
-             2 Susan       Lee        HR           2021-03-20     55000.00
+TRIM(): Strip unwanted leading and trailing whitespace.
 
-*These are illustrative sample rows. Your output will depend on the
-records entered in your database.*
+📈 Advanced Window Functions & Business Logic
+Running Totals: Calculate cumulative sum of TotalAmount for order history.
 
-## 03 · SQL Skills Demonstrated
+Ranking Functions: Apply RANK() over orders ordered by revenue size.
 
-  -----------------------------------------------------------------------
-  SQL concept                         What it does in this project
-  ----------------------------------- -----------------------------------
-  `INNER JOIN`                        Shows orders that have matching
-                                      customers
+Tiered Discount Schemes: Assign discounts using conditional CASE statements:
 
-  `LEFT JOIN`                         Keeps all customers, including
-                                      those without orders
+TotalAmount > $1000 ➡️ 10% Off
 
-  `RIGHT JOIN`                        Keeps all orders and their matching
-                                      customer details
+TotalAmount > $500 ➡️ 5% Off
 
-  `FULL OUTER JOIN`                   Combines matched and unmatched
-                                      rows; emulate in MySQL with `UNION`
-                                      if needed
+Categorization: Group employee salary brackets into Low, Medium, or High.
 
-  Subqueries                          Compare orders or salaries against
-                                      an average
+🛠️ How to Run the Queries
+Clone the Repository:
 
-  Date functions                      Extract month, calculate date
-                                      differences, format dates
+Bash
+git clone https://github.com/vaibhavonsigra/SQL-Project.git
+cd SQL-Project
+Initialize Database:
+Import and run the creation script in your SQL environment (MySQL / PostgreSQL / SQL Server):
 
-  String functions                    Join names, replace text, change
-                                      case, trim spaces
+SQL
+SOURCE schema.sql;
+SOURCE data.sql;
+Execute Analytics Script:
+Execute queries individually or run the complete transformation module:
 
-  Window functions                    Calculate running totals and rank
-                                      orders
+SQL
+SOURCE data_transformer.sql;
+📌 Submission & Guidelines Compliance
+Originality: All queries are written originally and tested for accuracy.
 
-  `CASE`                              Apply discounts and categorize
-                                      salary levels
-  -----------------------------------------------------------------------
+Modularity: Structured logic adheres strictly to standard relational database design patterns.
 
-## 04 · Tasks to Complete
-
-Use this checklist to track the required work. Add the SQL query and its
-result screenshot beneath each task in your final submission.
-
--   [ ] **01 --- INNER JOIN:** Retrieve order and customer details where
-    a matching customer exists.
--   [ ] **02 --- LEFT JOIN:** Retrieve all customers and their
-    corresponding orders, if any.
--   [ ] **03 --- RIGHT JOIN:** Retrieve all orders and corresponding
-    customer details, if any.
--   [ ] **04 --- FULL OUTER JOIN:** Retrieve all customers and all
-    orders, including unmatched records. In MySQL, use a suitable
-    `UNION` approach.
--   [ ] **05 --- Order subquery:** Find customers who placed orders
-    worth more than the average order amount.
--   [ ] **06 --- Salary subquery:** Find employees whose salary is above
-    the average salary.
--   [ ] **07 --- Month extraction:** Extract the month from each order
-    date.
--   [ ] **08 --- Date difference:** Calculate the number of days between
-    each order date and the current date.
--   [ ] **09 --- Date formatting:** Display `OrderDate` in `YYYY-MM-DD`
-    format.
--   [ ] **10 --- Full name:** Concatenate `FirstName` and `LastName`.
--   [ ] **11 --- Text replacement:** Replace a space in a name with
-    another string (for example, `John Doe` → `Johnathan Doe`, as
-    specified by the exercise).
--   [ ] **12 --- Case conversion:** Convert first names to uppercase and
-    last names to lowercase.
--   [ ] **13 --- Email cleanup:** Remove leading and trailing spaces
-    from email values.
--   [ ] **14 --- Running total:** Calculate a cumulative total of order
-    amounts.
--   [ ] **15 --- Order ranking:** Rank orders by `TotalAmount` using
-    `RANK()`.
--   [ ] **16 --- Discount logic:** Assign a discount based on order
-    amount (for example, above 100 = 10%; above 50 = 5%). Confirm the
-    exact threshold interpretation with your instructor.
--   [ ] **17 --- Salary category:** Classify employee salaries as High,
-    Medium, or Low. State the salary cut-offs you assume.
-
-## 05 · How to Run in phpMyAdmin
-
-1.  Open **phpMyAdmin** in your browser and sign in to your local
-    server.
-2.  Create or select the project database.
-3.  Open the **SQL** tab and run the table-creation statements.
-4.  Insert the sample or instructor-approved records into each table.
-5.  Run each task query individually, or in small groups, to make errors
-    easier to identify.
-6.  Check the result grid. Confirm column names, row counts, and values.
-7.  Capture a screenshot showing the query and its output. Keep the task
-    number visible in your document.
-8.  Save your final SQL script and this README with the project files.
-
-> **Compatibility note:** MySQL does not support `FULL OUTER JOIN`
-> directly. Use a `LEFT JOIN` combined with a `RIGHT JOIN` using `UNION`
-> (or another instructor-approved equivalent). Window functions such as
-> `RANK()` require MySQL 8.0+.
-
-## 06 · Assumptions & Data Notes
-
--   Use consistent table and column names throughout the SQL script.
-    This README uses lowercase table names and the field names shown in
-    the brief.
--   `CustomerID`, `OrderID`, and `EmployeeID` should uniquely identify
-    records.
--   `orders.CustomerID` should reference an existing customer when
-    enforcing a foreign key.
--   Store dates in a MySQL `DATE` or appropriate date/time type, and
-    store money values in `DECIMAL` rather than floating-point types.
--   The exercise does not specify salary bands or every discount
-    boundary. Clearly document any assumptions used in your queries.
--   If your MySQL version differs from the one assumed, adjust
-    unsupported syntax and mention the change.
-
-## 07 · Results & Evidence
-
-For a strong submission, include evidence for **every task**, not just
-the final database screen.
-
-Suggested format for each task:
-
-**Task 01 --- INNER JOIN**
-
--   **Objective:** Retrieve order details with matching customer
-    information.
--   **SQL Query:** Paste the exact query used in phpMyAdmin.
--   **Output:** Insert a screenshot of the result grid.
--   **Observation:** Write one or two lines describing what the result
-    shows.
-
-Repeat this block for Tasks 02--17. Ensure screenshots are readable and
-correspond to the query directly above them.
-
-## 08 · Suggested Folder Structure
-
-``` text
-Data-Transform-SQL/
-├── README.md
-├── sql/
-│   ├── 01_create_database_tables.sql
-│   ├── 02_insert_sample_data.sql
-│   └── 03_analysis_tasks.sql
-└── screenshots/
-    ├── task-01-inner-join.png
-    ├── task-02-left-join.png
-    └── ... task-17-salary-category.png
-```
-
-## 09 · Project Summary
-
-This project demonstrates how SQL can turn related raw records into
-useful business information. It combines relational querying, data
-transformation, analysis, and reporting techniques in a single practical
-workflow using MySQL and phpMyAdmin.
-
-### Final submission checklist
-
--   [ ] Database and all three tables created
--   [ ] Sample or approved data inserted
--   [ ] All 17 task queries tested
--   [ ] SQL file saved and organized
--   [ ] Query and output screenshot added for each task
--   [ ] Assumptions documented
--   [ ] README reviewed for clarity
--   [ ] Project uploaded to GitHub, if required by the instructor
-
-------------------------------------------------------------------------
-
-**Prepared for academic project submission**\
-*Write original queries, verify every result in your own database, and
-follow your instructor's submission and citation rules.*
+Designed
